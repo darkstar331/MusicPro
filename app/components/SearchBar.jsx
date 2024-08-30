@@ -43,7 +43,7 @@ const SearchBar = () => {
 
     return (
         <div className="relative w-full pt-8  md:pt-16 max-w-lg mx-auto">
-            <div className="flex items-center mx-4 md:mx-0 rounded-3xl md:rounded-2xl border md:border-4 border-gray-600 bg-transparent transition-colors focus-within:border-amber-600">
+            <div className="flex items-center mx-4 md:mx-0 rounded-3xl md:rounded-2xl border md:border-4 border-gray-600 bg-transparent transition-colors md:focus-within:border-amber-600">
                 <input
                     type="text"
                     placeholder="Enter song name here"

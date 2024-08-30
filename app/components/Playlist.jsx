@@ -17,7 +17,7 @@ const Playlist = () => {
             {playlist.length === 0 ? (
                 <p className="empty-playlist text-gray-400 text-center">No liked songs yet.</p>
             ) : (
-                <div className="overflow-y-auto max-h-96 hidden-scrollbar">
+                <div className="overflow-y-auto max-h-80 md:max-h-96 hidden-scrollbar">
                     <ul className="playlist space-y-4">
                         {playlist.map((song, index) => (
                             <li 
