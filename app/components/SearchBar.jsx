@@ -42,12 +42,12 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="relative w-full pt-5  md:pt-9 max-w-lg mx-auto">
-            <div className="flex items-center mx-4 md:mx-0 rounded-3xl md:rounded-2xl border border-gray-600 bg-[#2c2c2c] transition-colors focus-within:border-amber-600">
+        <div className="relative w-full pt-8  md:pt-16 max-w-lg mx-auto">
+            <div className="flex items-center mx-4 md:mx-0 rounded-3xl md:rounded-2xl border md:border-4 border-gray-600 bg-transparent transition-colors focus-within:border-amber-600">
                 <input
                     type="text"
                     placeholder="Enter song name here"
-                    className="flex-grow p-4 text-sm  font-bold text-white bg-transparent outline-none placeholder-white"
+                    className="flex-grow p-4 text-sm md:p-5 font-bold text-white bg-transparent outline-none placeholder-white"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleSearch}

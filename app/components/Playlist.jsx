@@ -13,7 +13,7 @@ const Playlist = () => {
     };
 
     return (
-        <div className="playlist-container p-4 md:p-6 bg-gray-900 rounded-lg shadow-lg">
+        <div className="playlist-container p-1 md:p-6 bg-gray-900 rounded-lg shadow-lg">
             {playlist.length === 0 ? (
                 <p className="empty-playlist text-gray-400 text-center">No liked songs yet.</p>
             ) : (
