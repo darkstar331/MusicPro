@@ -16,33 +16,42 @@ const SearchBar = () => {
         }
     }, [current]);
 
-    const handleSearch = async (event) => {
-        if (event.key === 'Enter' && query.trim()) {
-            try {
-                const response = await axios.get('/api/getResults', {
-                    params: { query } 
-                });
+    useEffect(() => {
+        const fetchSongs = async () => {
+            if (query.trim()) {
+                try {
+                    const response = await axios.get('/api/getResults', {
+                        params: { query } 
+                    });
 
-                const fetchedSongs = response.data.songs;
-                console.log('Songs:', fetchedSongs);
+                    const fetchedSongs = response.data.songs;
+                    console.log('Songs:', fetchedSongs);
 
-                setSongs(fetchedSongs);
-                setShowResult(true);
-                setQuery('');
-            } catch (error) {
-                console.error('Error fetching YouTube data:', error);
+                    setSongs(fetchedSongs);
+                    setShowResult(true);
+                } catch (error) {
+                    console.error('Error fetching YouTube data:', error);
+                }
+            } else {
+                setSongs([]);
+                setShowResult(false);
             }
-        }
-    };
+        };
+
+        // Debounce to prevent too many API calls
+        const debounceTimer = setTimeout(fetchSongs, 300);
+
+        return () => clearTimeout(debounceTimer);
+    }, [query]);
 
     const handleSongClick = (song) => {
         setCurrent(song);
         setShowResult(false);
-        setIsLiked(false)
+        setIsLiked(false);
     };
 
     return (
-        <div className="relative w-full pt-8  md:pt-16 max-w-lg mx-auto">
+        <div className="relative w-full pt-8 md:pt-16 max-w-lg mx-auto">
             <div className="flex items-center mx-4 md:mx-0 rounded-3xl md:rounded-2xl border md:border-4 border-gray-600 bg-transparent transition-colors md:focus-within:border-amber-600">
                 <input
                     type="text"
@@ -50,7 +59,6 @@ const SearchBar = () => {
                     className="flex-grow p-4 text-sm md:p-5 font-bold text-white bg-transparent outline-none placeholder-white"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleSearch}
                 />
             </div>
 
@@ -79,3 +87,4 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+

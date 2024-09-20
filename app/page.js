@@ -59,7 +59,7 @@ const HomePage = () => {
           </div>
         ) : (
           <div className="flex justify-center absolute mt-24 mr-3 md:mr-0 md:mt-0 md:top-[25rem] md:right-[30rem] 2xl:top-[30rem] 2xl:right-[44rem] items-center h-auto">
-  <div className="text-center bg-gray-800 p-6 rounded-lg shadow-lg">
+  <div className="text-center bg-teal-950 p-6 rounded-lg shadow-lg">
     <h2 className="text-4xl font-bold mb-4 text-red-500">
       😢 No Playlist Found
     </h2>
