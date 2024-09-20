@@ -3,9 +3,15 @@
 @tailwind utilities;
 
 body {
-  background-color: #111827;
-  color: white;
-
+  position: absolute;
+  top: 0;
+  z-index: -2;
+  height: 100vh; /* Full height */
+  width: 100vw; /* Full width */
+  background-color: #000000; /* Black background */
+  background-image: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.2) 1px, rgba(0, 9, 29, 1) 1px);
+  background-size: 20px 20px; /* Size of the gradient pattern */
+  
 }
 /* Hide scrollbar for all browsers */
 .hidden-scrollbar {
