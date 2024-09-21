@@ -166,7 +166,7 @@ const Header = () => {
                 ) : (
                     <button
                         onClick={() => signIn('github')}
-                        className="bg-gray-800 rounded-md w-24 hover:bg-gray-700 text-white font-medium border focus-within:border-amber-600  px-4 py-2 transition duration-300 flex items-center justify-center"
+                        className="bg-gray-800 rounded-md w-24 hover:bg-pink-400 text-white font-medium border focus-within:border-amber-600  px-4 py-2 transition duration-300 flex items-center justify-center"
                     >
                         < FaGithub className="w-5 h-5 md:w-10 md:h-7" />
                     </button>

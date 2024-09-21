@@ -46,24 +46,26 @@ const SearchBar = () => {
 
     const handleSongClick = (song) => {
         setCurrent(song);
+        setQuery(''); // Clear the search bar
         setShowResult(false);
         setIsLiked(false);
     };
 
     return (
         <div className="relative w-full pt-8 md:pt-16 max-w-lg mx-auto">
-            <div className="flex items-center mx-4 md:mx-0 rounded-3xl md:rounded-2xl border md:border-4 border-gray-600 bg-transparent transition-colors md:focus-within:border-amber-600">
+            <div className="flex items-center mx-4 md:mx-0 rounded-md md:rounded-2xl border md:border-4 border-pink-400 bg-transparent transition-colors md:focus-within:border-amber-600">
                 <input
                     type="text"
                     placeholder="Enter song name here"
                     className="flex-grow p-4 text-sm md:p-5 font-bold text-white bg-transparent outline-none placeholder-white"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
+                    onFocus={() => setShowResult(true)} // Show results when focused
                 />
             </div>
 
             {showResult && songs.length > 0 && (
-                <ul className="absolute z-10 w-full mt-2 overflow-y-auto bg-[#2c2c2c] border border-gray-600 rounded-xl max-h-60 shadow-lg hidden-scrollbar">
+                <ul className="absolute z-10 w-full mt-2 overflow-y-auto bg-[#00091D] border border-gray-600 rounded-xl max-h-60 shadow-lg hidden-scrollbar">
                     {songs.map((song) => (
                         <li
                             key={song.videoId}
@@ -75,7 +77,6 @@ const SearchBar = () => {
                                 alt={song.title}
                                 width={48}
                                 height={48}
-                                className="rounded-full"
                             />
                             <span className="text-sm font-medium text-white truncate">{song.title}</span>
                         </li>
@@ -87,4 +88,3 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-
