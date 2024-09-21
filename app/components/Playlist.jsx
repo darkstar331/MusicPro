@@ -13,7 +13,7 @@ const Playlist = () => {
     };
 
     return (
-        <div className="playlist-container p-1 md:p-6 bg-gray-900 rounded-lg shadow-lg">
+        <div className="playlist-container p-1 md:p-6 bg-slate-800 border-pink-400 border-l-8 rounded-lg shadow-lg">
             {playlist.length === 0 ? (
                 <p className="empty-playlist text-gray-400 text-center">No liked songs yet.</p>
             ) : (
@@ -22,7 +22,7 @@ const Playlist = () => {
                         {playlist.map((song, index) => (
                             <li 
                                 key={index} 
-                                className="playlist-item flex items-center bg-gray-800 rounded-lg p-3 transition-transform transform hover:-translate-y-1 hover:bg-gray-700 cursor-pointer"
+                                className="playlist-item flex items-center bg-[#00091D] rounded-lg p-3 transition-transform transform hover:-translate-y-1 hover:bg-white hover:text-black cursor-pointer"
                                 onClick={() => handleSongClick(song)}  // Add onClick handler
                             >
                                 <img 
@@ -31,7 +31,7 @@ const Playlist = () => {
                                     className="song-thumbnail w-16 h-16 rounded-lg object-cover mr-4"
                                 />
                                 <div className="song-details flex-1">
-                                    <span className="song-title text-white font-medium">{song.title}</span>
+                                    <span className="song-title  font-medium">{song.title}</span>
                                 </div>
                                 <button 
                                     className="remove-button text-red-500 hover:text-red-700 transition-colors" 
