@@ -69,7 +69,7 @@ const MusicPlayer = () => {
                 key={current.videoId}
             />
 
-            <div className="flex items-center w-full md:w-[25%] gap-3 mb-4 md:mb-0">
+            <div className="flex items-center w-full h-12 md:h-auto md:w-[25%] gap-3 mb-1 md:mb-0">
                 {isOpen ? (
                     <>
                         <img src={current.thumbnail} alt="Song Thumbnail" className="w-16 h-16 rounded-lg" />
@@ -102,7 +102,7 @@ const MusicPlayer = () => {
 
             {isOpen && (
                 <>
-                    <div className="flex justify-center items-center gap-4 w-full md:w-[30%] mb-4 md:mb-0">
+                    <div className="flex justify-center items-center gap-4 w-full md:w-[30%] mb-2 md:mb-0">
                         <button className='text-white hover:text-amber-400 transition-colors duration-200 focus:outline-none' onClick={skipPrevious}>
                             <FaStepBackward style={{ fontSize: '30px' }} />
                         </button>
