@@ -3,7 +3,7 @@ import axios from "axios";
 export default async function handler(req, res) {
   const { query } = req.query;
 
-  const apikey = process.env.YOUTUBE_API_KEY
+  const apikey = "AIzaSyAnEBYcfHVXkf6LGJDhvmQzvxywEu_ZmIo"
 
   if (!query) {
     return res.status(400).json({ message: 'Query parameter is required' });
