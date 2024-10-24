@@ -13,39 +13,36 @@ const Playlist = () => {
     };
 
     return (
-        <div className="playlist-container p-1 md:p-6 bg-slate-800 border-pink-400 border-l-8 rounded-lg shadow-lg">
+        <div className="playlist-container p-1 md:p-6 bg-[#121212] border-[#1DB954] border-l-8 rounded-lg shadow-lg">
             {playlist.length === 0 ? (
                 <p className="empty-playlist text-gray-400 text-center">No liked songs yet.</p>
             ) : (
-                <div className="overflow-y-auto max-h-80 md:max-h-96 hidden-scrollbar">
-                    <ul className="playlist space-y-4">
-                        {playlist.map((song, index) => (
-                            <li 
-                                key={index} 
-                                className="playlist-item flex items-center bg-[#00091D] rounded-lg p-3 transition-transform transform hover:-translate-y-1 hover:bg-white hover:text-black cursor-pointer"
-                                onClick={() => handleSongClick(song)}  // Add onClick handler
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto max-h-[80vh] py-4 hidden-scrollbar">
+                    {playlist.map((song, index) => (
+                        <div
+                            key={index}
+                            className="cursor-pointer text-center transition-transform transform hover:scale-110 bg-[#181818] p-6 rounded-lg shadow-md hover:shadow-lg w-64 md:w-56 sm:w-48"
+                            onClick={() => handleSongClick(song)}  // Add onClick handler
+                        >
+                            <img 
+                                src={song.thumbnail} 
+                                alt={song.title} 
+                                className="w-full h-56 object-cover rounded-md shadow-md md:h-48 sm:h-40"
+                            />
+                            <p className="mt-2 text-lg font-semibold text-[#1db954] truncate">{song.title}</p>
+                            <p className="text-sm text-gray-400 truncate">{song.artist}</p>
+                            <button 
+                                className="remove-button mt-2 text-gray-500 hover:text-red-500 transition-colors" 
+                                onClick={(e) => {
+                                    e.stopPropagation();  // Prevent the click from setting the current song
+                                    handleRemove(song.videoId);
+                                }}
+                                aria-label="Remove song"
                             >
-                                <img 
-                                    src={song.thumbnail} 
-                                    alt={song.title} 
-                                    className="song-thumbnail w-16 h-16 rounded-lg object-cover mr-4"
-                                />
-                                <div className="song-details flex-1">
-                                    <span className="song-title  font-medium">{song.title}</span>
-                                </div>
-                                <button 
-                                    className="remove-button text-red-500 hover:text-red-700 transition-colors" 
-                                    onClick={(e) => {
-                                        e.stopPropagation();  // Prevent the click from setting the current song
-                                        handleRemove(song.videoId);
-                                    }}
-                                    aria-label="Remove song"
-                                >
-                                    <FaTrash className="remove-icon w-5 h-5" />
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
+                                <FaTrash className="remove-icon w-5 h-5" />
+                            </button>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
@@ -53,4 +50,6 @@ const Playlist = () => {
 };
 
 export default Playlist;
+
+
 
