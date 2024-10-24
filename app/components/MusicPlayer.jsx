@@ -33,6 +33,7 @@ const MusicPlayer = () => {
     handleProgress,
     handleDuration,
     handleAdd,
+    setPlaying,
   } = useMusicPlayer();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -59,8 +60,28 @@ const MusicPlayer = () => {
     }
   }, [current, playlist]);
 
-  const toggleOpen = () => setIsOpen(!isOpen);
-  const toggleFullScreen = () => setIsFullScreen(!isFullScreen);
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') {
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        skipPrevious();
+      } else if (e.key === ' ') {
+        togglePlayPause();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleNext, skipPrevious, togglePlayPause]);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
+  };
 
   const handleLikeClick = () => {
     if (isLiked) return;
@@ -98,7 +119,7 @@ const MusicPlayer = () => {
         isOpen ? 'h-auto p-4' : 'h-20 p-2'
       }`}
     >
-      {/* ReactPlayer is always rendered to prevent re-mounting */}
+      {/* ReactPlayer is always rendered to maintain playerRef consistency */}
       <ReactPlayer
         ref={playerRef}
         url={`https://www.youtube.com/watch?v=${activeSong.videoId}`}
@@ -106,7 +127,16 @@ const MusicPlayer = () => {
         onProgress={handleProgress}
         onDuration={handleDuration}
         onEnded={handleNext}
-        style={{ display: 'none' }}
+        width={isFullScreen && !isMobile ? '80vw' : '0px'}
+        height={isFullScreen && !isMobile ? '45vw' : '0px'}
+        style={{
+          display: isFullScreen && !isMobile ? 'block' : 'none',
+          position: isFullScreen && !isMobile ? 'fixed' : 'absolute',
+          top: isFullScreen && !isMobile ? '50%' : '0',
+          left: isFullScreen && !isMobile ? '50%' : '0',
+          transform: isFullScreen && !isMobile ? 'translate(-50%, -50%)' : 'none',
+          zIndex: isFullScreen && !isMobile ? 50 : -1,
+        }}
         config={{
           youtube: {
             playerVars: {
@@ -197,7 +227,10 @@ const MusicPlayer = () => {
             max={1}
             step="any"
             value={played}
-            onChange={handleSeekChange}
+            onChange={(e) => {
+              handleSeekChange(e);
+              playerRef.current.seekTo(parseFloat(e.target.value));
+            }}
             className={`w-full h-1 rounded-lg appearance-none cursor-pointer focus:outline-none ${
               isPlaying ? 'bg-[#1DB954]' : 'bg-gray-600'
             } transition-colors duration-200`}
@@ -220,42 +253,6 @@ const MusicPlayer = () => {
       {/* Full Screen Mode */}
       {isFullScreen && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-90">
-          {/* Conditionally render ReactPlayer in full-screen mode based on device */}
-          {!isMobile && (
-            <div className="relative">
-              <ReactPlayer
-                ref={playerRef}
-                url={`https://www.youtube.com/watch?v=${activeSong.videoId}`}
-                playing={isPlaying}
-                onProgress={handleProgress}
-                onDuration={handleDuration}
-                onEnded={handleNext}
-                width="80vw"
-                height="45vw"
-                config={{
-                  youtube: {
-                    playerVars: {
-                      controls: 0,
-                      modestbranding: 1,
-                      playsinline: 1,
-                      fs: 0,
-                      rel: 0,
-                      iv_load_policy: 3,
-                    },
-                  },
-                }}
-              />
-              {/* Overlay to cover YouTube overlays */}
-              <div
-                className="absolute top-0 left-0 w-full h-full"
-                style={{
-                  backgroundColor: 'transparent',
-                  pointerEvents: 'none',
-                }}
-              ></div>
-            </div>
-          )}
-
           {/* Display alternative content on mobile */}
           {isMobile && (
             <div className="flex flex-col items-center">
@@ -277,7 +274,10 @@ const MusicPlayer = () => {
             </button>
             <button
               className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-              onClick={togglePlayPause}
+              onClick={() => {
+                togglePlayPause();
+                setPlaying(!isPlaying);
+              }}
             >
               {isPlaying ? (
                 <FaPause style={{ fontSize: '40px' }} />
@@ -294,10 +294,10 @@ const MusicPlayer = () => {
           </div>
           {/* Close Full Screen Button */}
           <button
-            className="absolute top-4 right-4 text-white focus:outline-none"
+            className="absolute top-60 right-4 text-white focus:outline-none"
             onClick={toggleFullScreen}
           >
-            <FaChevronDown className="h-12 w-20" />
+            <FaChevronDown className="h-7 w-7" />
           </button>
         </div>
       )}
