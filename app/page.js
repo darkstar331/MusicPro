@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import Playlist from "../app/components/Playlist";
 import { useMusicPlayer } from "./context/MusicPlayerContext";
 import { useSession } from "next-auth/react";
 import { FiInfo } from "react-icons/fi";
@@ -70,8 +71,8 @@ const HomePage = () => {
   }, [status]);
 
   if (status === 'authenticated') {
-    return null; // Hide HomePage component when user is authenticated
-  }
+    return <Playlist />; // Show Playlist component when user is authenticated
+}
 
   const handleSongClick = (song) => {
     setCurrent(song); // Set the clicked song as the current song
