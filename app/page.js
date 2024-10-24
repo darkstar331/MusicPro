@@ -59,30 +59,22 @@ const HomePage = () => {
       videoId: "60ItHLz5WEA",
       thumbnail: "https://img.youtube.com/vi/60ItHLz5WEA/0.jpg"
     }
-
-    
   ]);
 
   useEffect(() => {
     if (status === 'authenticated') {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000); // Adjust the delay as needed
+      setIsLoading(false);
     } else {
       setIsLoading(false);
     }
   }, [status]);
 
+  if (status === 'authenticated') {
+    return null; // Hide HomePage component when user is authenticated
+  }
+
   const handleSongClick = (song) => {
     setCurrent(song); // Set the clicked song as the current song
-  };
-
-  const handleInfoHover = () => {
-    setShowDialog(true);
-  };
-
-  const handleInfoLeave = () => {
-    setShowDialog(false);
   };
 
   return (
