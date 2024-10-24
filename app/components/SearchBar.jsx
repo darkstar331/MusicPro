@@ -70,7 +70,7 @@ const SearchBar = () => {
             {!showSearchBar && (
                 <button 
                     onClick={() => setShowSearchBar(true)}
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] transition-colors duration-300 focus:outline-none absolute right-[15rem] "
+                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] transition-colors duration-300 focus:outline-none absolute right-[15rem]"
                 >
                     <FaSearch className="text-white w-6 h-6" />
                 </button>
@@ -88,10 +88,11 @@ const SearchBar = () => {
                         <input
                             type="text"
                             placeholder={showSearchBar ? "What do you want to listen to?" : ""}
-                            className="flex-grow border-b-2 border-white  p-2 text-sm font-bold text-white bg-transparent outline-none placeholder-white"
+                            className="flex-grow border-b-2 border-white p-2 text-base font-bold text-white bg-transparent outline-none placeholder-white"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             onFocus={() => setShowResult(true)} // Show results when focused
+                            style={{ fontSize: '16px' }} // Ensure font size is at least 16px
                         />
                         <FaSearch className="text-white w-6 h-6 cursor-pointer ml-2" onClick={handleCloseSearchBar} />
                     </motion.div>
@@ -121,8 +122,8 @@ const SearchBar = () => {
                                     className="rounded-md"
                                 />
                                 <div className="flex flex-col">
-                                    <span className="text-sm font-medium text-black truncate">{song.title}</span>
-                                    <span className="text-xs text-gray-500">{song.channel}</span>
+                                    <span className="text-base font-medium text-black truncate">{song.title}</span>
+                                    <span className="text-sm text-gray-500">{song.channel}</span>
                                 </div>
                             </li>
                         ))}

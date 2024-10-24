@@ -3,7 +3,7 @@ import axios from "axios";
 export default async function handler(req, res) {
   const { query } = req.query;
 
-  const apikey = "AIzaSyAVHAMAWUR9TbTwEwPTJeEzhybA5IFEU8k"
+  const apikey = "AIzaSyDUD_qplFxQ9AT8M4zhvpUHSYHjhUmDF28"
 
   if (!query) {
     return res.status(400).json({ message: 'Query parameter is required' });
