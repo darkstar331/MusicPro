@@ -70,7 +70,7 @@ const SearchBar = () => {
             {!showSearchBar && (
                 <button 
                     onClick={() => setShowSearchBar(true)}
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] transition-colors duration-300 focus:outline-none absolute left-4"
+                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] transition-colors duration-300 focus:outline-none absolute right-[15rem] "
                 >
                     <FaSearch className="text-white w-6 h-6" />
                 </button>
@@ -79,7 +79,7 @@ const SearchBar = () => {
             <AnimatePresence>
                 {showSearchBar && (
                     <motion.div
-                        className="flex items-center  bg-slate-900 text-white pl-4 pr-2 py-2"
+                        className="flex items-center bg-transparent text-white pl-4 pr-2 py-2"
                         initial={{ width: 0, opacity: 0 }}
                         animate={{ width: "100%", opacity: 1 }}
                         exit={{ width: 0, opacity: 0 }}

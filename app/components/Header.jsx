@@ -85,7 +85,7 @@ const Header = () => {
     }, []);
 
     return (
-        <nav className='flex justify-between items-center p-5 bg-[#181818] text-white border-b-4 border-[#1DB954] shadow-md'>
+        <nav className='flex justify-between items-center p-5 bg-[#121212] text-white border-b-4 border-[#1DB954] shadow-md'>
             <div className="flex items-center space-x-3 font-extrabold md:text-2xl text-xl">
                 <img className="md:w-14 w-9 rounded-full" src="/favicon.ico" alt="Logo" />
                 <span className="tracking-wide">MusicLite</span>
@@ -102,7 +102,7 @@ const Header = () => {
                             <div className="relative dropdown-container">
                                 <button
                                     onClick={toggleDropdown}
-                                    className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-full transition duration-300 focus:outline-none focus:ring-2 focus:ring-[#1DB954]"
+                                    className="flex items-center space-x-2 bg-[#000000] hover:bg-gray-700 text-white px-4 py-2 rounded-full transition duration-300 focus:outline-none focus:ring-2 focus:ring-[#1DB954]"
                                 >
                                     <FaUserCircle className="w-5 h-5 md:w-10 md:h-7" />
                                     <span className="font-medium">Account</span>
