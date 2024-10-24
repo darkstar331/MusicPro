@@ -135,9 +135,9 @@ const MusicPlayer = () => {
         </div>
         <button onClick={handleLikeClick} className="ml-3 focus:outline-none">
           {isLiked ? (
-            <FaHeart className="text-red-700 absolute top-9 right-16 text-2xl transition-colors duration-200" />
+            <FaHeart className="text-red-700 absolute sm:relative top-9 right-16 sm:top-0 sm:right-0 text-2xl transition-colors duration-200" />
           ) : (
-            <FaRegHeart className="text-gray-300 absolute top-9 right-16 text-2xl hover:text-[#1ed760] transition-colors duration-200" />
+            <FaRegHeart className="text-gray-300 absolute sm:relative top-9 right-16 sm:top-0 sm:right-0  text-2xl hover:text-[#1ed760] transition-colors duration-200" />
           )}
         </button>
 
