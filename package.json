@@ -30,6 +30,7 @@
   "devDependencies": {
     "postcss": "^8",
     "prisma": "^5.19.0",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "tailwindcss-pseudo-elements": "^2.0.0"
   }
 }

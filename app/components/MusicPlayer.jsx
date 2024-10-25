@@ -115,7 +115,7 @@ const MusicPlayer = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 bg-[#121212] border-t-2 border-[#1DB954] flex flex-col md:flex-row items-center justify-between z-50 transition-all duration-500 ${
+      className={`fixed bottom-0 left-0 right-0 bg-[#121212] border-t-2 border-black flex flex-col md:flex-row items-center justify-between z-50 transition-all duration-500 ${
         isOpen ? 'h-auto p-4' : 'h-20 p-2'
       }`}
     >
@@ -165,9 +165,9 @@ const MusicPlayer = () => {
         </div>
         <button onClick={handleLikeClick} className="ml-3 focus:outline-none">
           {isLiked ? (
-            <FaHeart className="text-red-700 absolute sm:relative top-9 right-16 sm:top-0 sm:right-0 text-2xl transition-colors duration-200" />
+            <FaHeart className="text-red-700 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0 text-2xl transition-colors duration-200" />
           ) : (
-            <FaRegHeart className="text-gray-300 absolute sm:relative top-9 right-16 sm:top-0 sm:right-0  text-2xl hover:text-[#1ed760] transition-colors duration-200" />
+            <FaRegHeart className="text-gray-300 absolute sm:relative top-44 right-16 sm:top-0 sm:right-0  text-2xl hover:text-[#1ed760] transition-colors duration-200" />
           )}
         </button>
 

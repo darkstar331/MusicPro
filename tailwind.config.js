@@ -14,5 +14,14 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-pseudo-elements'),
+  ],
+  variants: {
+    extend: {
+      // Add variants for pseudo-elements
+      backgroundColor: ['before', 'hover::before'],
+      // ...other variants
+    },
+  },
 };
