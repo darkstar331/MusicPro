@@ -167,7 +167,7 @@ const MusicPlayer = () => {
           {isLiked ? (
             <FaHeart className="text-red-700 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0 text-2xl transition-colors duration-200" />
           ) : (
-            <FaRegHeart className="text-gray-300 absolute sm:relative top-44 right-16 sm:top-0 sm:right-0  text-2xl hover:text-[#1ed760] transition-colors duration-200" />
+            <FaRegHeart className="text-gray-300 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0  text-2xl hover:text-[#1ed760] transition-colors duration-200" />
           )}
         </button>
 
