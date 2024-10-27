@@ -79,43 +79,43 @@ const HomePage = () => {
   };
 
   return (
-    // <div className="relative w-full overflow-y-auto mt-14 mb-28 bg-transparent p-6">
-    //   <h2 className="text-3xl font-bold text-[#1db954] mb-4">Most Viewed Songs</h2>
-    //   <div className="grid grid-cols-1 m-2 px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto h-[28rem] py-4 hidden-scrollbar">
-    //     {randomHits.map((song, index) => (
-    //       <div
-    //         key={index}
-    //         className="cursor-pointer text-center transition-transform transform hover:scale-110 bg-[#121212] p-7 rounded-lg shadow-md hover:shadow-lg"
-    //         onClick={() => handleSongClick(song)}
-    //       >
-    //         <img src={song.thumbnail} alt={song.title} className="w-full h-48 object-cover rounded-md shadow-md" />
-    //         <p className="mt-2 text-lg font-semibold text-[#1db954] truncate">{song.title}</p>
-    //         <p className="text-sm text-gray-400 truncate">{song.artist}</p>
-    //       </div>
-    //     ))}
-    //   </div>
-    //   {/* Info Button Icon */}
-    //   <div className="fixed top-32 right-8 flex items-center">
-    //     <div
-    //       className="cursor-pointer p-3 bg-[#1db954] rounded-full text-white shadow-lg hover:bg-[#17a34a] transition-colors"
-    //       onClick={() => {
-    //         setShowDialog(!showDialog);
-    //         if (!showDialog) {
-    //           setTimeout(() => setShowDialog(false), 5000);
-    //         }
-    //       }}
-    //     >
-    //       <FiInfo size={24} />
-    //     </div>
-    //     {/* Dialog Box */}
-    //     {showDialog && (
-    //       <div className="absolute top-0 right-0 mt-12 p-4 bg-white text-black rounded-lg shadow-lg w-64">
-    //         <p className="font-medium">Sign in to create your custom playlist and enjoy personalized recommendations!</p>
-    //       </div>
-    //     )}
-    //   </div>
-    // </div>
-    <Playlist/>
+    <div className="relative w-full overflow-y-auto mt-14 mb-28 bg-transparent p-6">
+      <h2 className="text-3xl font-bold text-[#1db954] mb-4">Most Viewed Songs</h2>
+      <div className="grid grid-cols-1 m-2 px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto h-[28rem] py-4 hidden-scrollbar">
+        {randomHits.map((song, index) => (
+          <div
+            key={index}
+            className="cursor-pointer text-center transition-transform transform hover:scale-110 bg-[#121212] p-7 rounded-lg shadow-md hover:shadow-lg"
+            onClick={() => handleSongClick(song)}
+          >
+            <img src={song.thumbnail} alt={song.title} className="w-full h-48 object-cover rounded-md shadow-md" />
+            <p className="mt-2 text-lg font-semibold text-[#1db954] truncate">{song.title}</p>
+            <p className="text-sm text-gray-400 truncate">{song.artist}</p>
+          </div>
+        ))}
+      </div>
+      {/* Info Button Icon */}
+      <div className="fixed top-32 right-8 flex items-center">
+        <div
+          className="cursor-pointer p-3 bg-[#1db954] rounded-full text-white shadow-lg hover:bg-[#17a34a] transition-colors"
+          onClick={() => {
+            setShowDialog(!showDialog);
+            if (!showDialog) {
+              setTimeout(() => setShowDialog(false), 5000);
+            }
+          }}
+        >
+          <FiInfo size={24} />
+        </div>
+        {/* Dialog Box */}
+        {showDialog && (
+          <div className="absolute top-0 right-0 mt-12 p-4 bg-white text-black rounded-lg shadow-lg w-64">
+            <p className="font-medium">Sign in to create your custom playlist and enjoy personalized recommendations!</p>
+          </div>
+        )}
+      </div>
+    </div>
+    
   );
 };
 
