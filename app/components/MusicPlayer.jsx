@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useState, useEffect } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import ReactPlayer from 'react-player/youtube';
@@ -125,14 +125,17 @@ const MusicPlayer = () => {
         onProgress={handleProgress}
         onDuration={handleDuration}
         onEnded={handleNext}
-        width={isFullScreen && !isMobile ? '100vw' : '0px'}
+        width={isFullScreen && !isMobile ? '92vw' : '0px'}
         height={isFullScreen && !isMobile ? '77vh' : '0px'}
         style={{
-          display: isFullScreen && !isMobile ? 'block' : 'none',
-          position: isFullScreen && !isMobile ? 'fixed' : 'absolute',
-          top: isFullScreen && !isMobile ? '50%' : '0',
-          left: isFullScreen && !isMobile ? '50%' : '0',
-          transform: isFullScreen && !isMobile ? 'translate(-50%, -50%)' : 'none',
+          opacity: isFullScreen && !isMobile ? 1 : 0,
+          pointerEvents: isFullScreen && !isMobile ? 'auto' : 'none',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: isFullScreen && !isMobile ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(0.8)',
+          transition: 'all 0.5s ease-in-out',
+          zIndex: 100,
         }}
         config={{
           youtube: {
@@ -148,7 +151,6 @@ const MusicPlayer = () => {
           },
         }}
       />
-      
 
       {/* Left Section (Thumbnail and Song Info) */}
       <div className="flex items-center w-full md:w-1/3 gap-3">
@@ -237,7 +239,7 @@ const MusicPlayer = () => {
 
       {/* Full Screen Toggle */}
       <button
-        className="absolute hidden md:block -top-6 right-2 text-white focus:outline-none"
+        className="absolute hidden md:block -top-0 right-2 text-white focus:outline-none"
         onClick={toggleFullScreen}
       >
         {isFullScreen ? (
@@ -251,5 +253,3 @@ const MusicPlayer = () => {
 };
 
 export default MusicPlayer;
-
-
