@@ -125,15 +125,14 @@ const MusicPlayer = () => {
         onProgress={handleProgress}
         onDuration={handleDuration}
         onEnded={handleNext}
-        width={isFullScreen && !isMobile ? '80vw' : '0px'}
-        height={isFullScreen && !isMobile ? '45vw' : '0px'}
+        width={isFullScreen && !isMobile ? '100vw' : '0px'}
+        height={isFullScreen && !isMobile ? '77vh' : '0px'}
         style={{
           display: isFullScreen && !isMobile ? 'block' : 'none',
           position: isFullScreen && !isMobile ? 'fixed' : 'absolute',
           top: isFullScreen && !isMobile ? '50%' : '0',
           left: isFullScreen && !isMobile ? '50%' : '0',
           transform: isFullScreen && !isMobile ? 'translate(-50%, -50%)' : 'none',
-          zIndex: isFullScreen && !isMobile ? 50 : -1,
         }}
         config={{
           youtube: {
@@ -144,10 +143,12 @@ const MusicPlayer = () => {
               fs: 0,
               rel: 0,
               iv_load_policy: 3,
+              showinfo: 0
             },
           },
         }}
       />
+      
 
       {/* Left Section (Thumbnail and Song Info) */}
       <div className="flex items-center w-full md:w-1/3 gap-3">
@@ -165,7 +166,7 @@ const MusicPlayer = () => {
           {isLiked ? (
             <FaHeart className="text-red-700 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0 text-2xl transition-colors duration-200" />
           ) : (
-            <FaRegHeart className="text-gray-300 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0  text-2xl hover:text-[#1ed760] transition-colors duration-200" />
+            <FaRegHeart className="text-gray-300 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0 text-2xl hover:text-[#1ed760] transition-colors duration-200" />
           )}
         </button>
 
@@ -196,15 +197,9 @@ const MusicPlayer = () => {
             onClick={togglePlayPause}
           >
             {isPlaying ? (
-              <FaPause
-                className="text-orange-400"
-                style={{ fontSize: '40px' }}
-              />
+              <FaPause className="text-orange-400" style={{ fontSize: '40px' }} />
             ) : (
-              <FaPlay
-                className="text-orange-400"
-                style={{ fontSize: '40px' }}
-              />
+              <FaPlay className="text-orange-400" style={{ fontSize: '40px' }} />
             )}
           </button>
           <button
@@ -245,63 +240,16 @@ const MusicPlayer = () => {
         className="absolute hidden md:block -top-6 right-2 text-white focus:outline-none"
         onClick={toggleFullScreen}
       >
-        <FaChevronUp className="h-6 w-12" />
+        {isFullScreen ? (
+          <FaChevronDown className="h-6 w-12" />
+        ) : (
+          <FaChevronUp className="h-6 w-12" />
+        )}
       </button>
-
-      {/* Full Screen Mode */}
-      {isFullScreen && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-90">
-          {/* Display alternative content on mobile */}
-          {isMobile && (
-            <div className="flex flex-col items-center">
-              <img
-                src={activeSong.thumbnail}
-                alt="Song Thumbnail"
-                className="w-80 h-80 rounded-lg"
-              />
-            </div>
-          )}
-
-          <div className="text-white text-lg mt-4">{activeSong.title}</div>
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <button
-              className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-              onClick={skipPrevious}
-            >
-              <FaStepBackward style={{ fontSize: '30px' }} />
-            </button>
-            <button
-              className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-              onClick={() => {
-                togglePlayPause();
-                setPlaying(!isPlaying);
-              }}
-            >
-              {isPlaying ? (
-                <FaPause style={{ fontSize: '40px' }} />
-              ) : (
-                <FaPlay style={{ fontSize: '40px' }} />
-              )}
-            </button>
-            <button
-              className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-              onClick={handleNext}
-            >
-              <FaStepForward style={{ fontSize: '30px' }} />
-            </button>
-          </div>
-          {/* Close Full Screen Button */}
-          <button
-            className="absolute top-60 right-4 text-white focus:outline-none"
-            onClick={toggleFullScreen}
-          >
-            <FaChevronDown className="h-7 w-7" />
-          </button>
-        </div>
-      )}
     </div>
   );
 };
 
 export default MusicPlayer;
+
 
