@@ -125,13 +125,13 @@ const MusicPlayer = () => {
         onProgress={handleProgress}
         onDuration={handleDuration}
         onEnded={handleNext}
-        width={isFullScreen && !isMobile ? '92vw' : '0px'}
-        height={isFullScreen && !isMobile ? '77vh' : '0px'}
+        width={isFullScreen && !isMobile ? '100vw' : '0px'}
+        height={isFullScreen && !isMobile ? '77.5vh' : '0px'}
         style={{
           opacity: isFullScreen && !isMobile ? 1 : 0,
           pointerEvents: isFullScreen && !isMobile ? 'auto' : 'none',
           position: 'fixed',
-          top: '50%',
+          top: '49.5%',
           left: '50%',
           transform: isFullScreen && !isMobile ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(0.8)',
           transition: 'all 0.5s ease-in-out',
