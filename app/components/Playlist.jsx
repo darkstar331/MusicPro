@@ -29,7 +29,7 @@ const Playlist = () => {
               <div className="flex flex-col">
                 <img
                   className="rounded-md w-full h-[250px] object-cover mb-4"
-                  src="https://images.unsplash.com/photo-1621075160523-b936ad96132a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+                  src="https://i.imgur.com/aZ9HulS.png"
                   alt="Song Cover"
                 />
                 <h2 className="text-lg font-bold text-white truncate group-hover:text-[#1db954] transition-colors mb-2">

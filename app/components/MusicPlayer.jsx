@@ -66,9 +66,7 @@ const MusicPlayer = () => {
         handleNext();
       } else if (e.key === 'ArrowLeft') {
         skipPrevious();
-      } else if (e.key === ' ') {
-        togglePlayPause();
-      }
+      } 
     };
 
     window.addEventListener('keydown', handleKeyDown);

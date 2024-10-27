@@ -87,7 +87,7 @@ const Header = () => {
     return (
         <nav className='flex justify-between items-center p-5 bg-[#121212] text-white border-b-4 border-[#000000] shadow-md'>
             <div className="flex items-center space-x-3 font-extrabold md:text-2xl text-xl">
-                <img className="md:w-14 w-9 rounded-full" src="/favicon.ico" alt="Logo" />
+                <img className="md:w-11 w-7 rounded-full" src="/favicon.ico" alt="Logo" />
                 <span className="tracking-wide">MusicLite</span>
             </div>
 
