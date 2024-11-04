@@ -9,19 +9,21 @@ import {
   FaStepForward,
   FaPlay,
   FaPause,
+  FaRandom,
+  FaVolumeUp,
+  FaVolumeMute,
   FaChevronUp,
   FaChevronDown,
 } from 'react-icons/fa';
+import { MdQueueMusic } from 'react-icons/md';
 
 const MusicPlayer = () => {
   const {
     current,
     isPlaying,
-    setPlaylist,
     togglePlayPause,
     handleNext,
     skipPrevious,
-    playlist,
     played,
     duration,
     handleSeekChange,
@@ -33,20 +35,24 @@ const MusicPlayer = () => {
     handleProgress,
     handleDuration,
     handleAdd,
-    setPlaying,
+    setPlaylist,
+    playlist,
   } = useMusicPlayer();
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(0.8);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isShrunk, setIsShrunk] = useState(false);
 
-  // Detect if the device is mobile
+  // Set initial device settings
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust breakpoint as needed
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Set initial value
+    handleResize(); // Initialize on mount
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -59,27 +65,6 @@ const MusicPlayer = () => {
       setIsLiked(isAlreadyLiked);
     }
   }, [current, playlist]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowRight') {
-        handleNext();
-      } else if (e.key === 'ArrowLeft') {
-        skipPrevious();
-      } 
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleNext, skipPrevious, togglePlayPause]);
-
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
-  };
 
   const handleLikeClick = () => {
     if (isLiked) return;
@@ -106,18 +91,35 @@ const MusicPlayer = () => {
   const dummyCurrent = {
     videoId: 'dQw4w9WgXcQ',
     title: 'Never Gonna Give You Up',
+    artist: 'Rick Astley',
     thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg',
   };
 
   const activeSong = current || dummyCurrent;
 
+  const handleMuteToggle = () => {
+    setIsMuted((prev) => !prev);
+    playerRef.current.muted = !isMuted;
+  };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen((prev) => !prev);
+  };
+
+  const toggleShrink = () => {
+    setIsShrunk((prev) => !prev);
+  };
+
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 bg-[#121212] border-t-2 border-black flex flex-col md:flex-row items-center justify-between z-50 transition-all duration-500 ${
-        isOpen ? 'h-auto p-4' : 'h-20 p-2'
+      className={`fixed bottom-0 left-0 right-0 bg-[#181818] text-white border-t border-gray-800 px-4 z-50 ${
+        isMobile
+          ? 'flex flex-col items-start overflow-hidden transition-all duration-500 ease-in-out'
+          : 'flex items-center'
       }`}
+      style={{ maxHeight: isMobile ? (isShrunk ? '80px' : '200px') : 'auto' }}
     >
-      {/* ReactPlayer is always rendered to maintain playerRef consistency */}
+      {/* ReactPlayer (hidden visually, used for playback) */}
       <ReactPlayer
         ref={playerRef}
         url={`https://www.youtube.com/watch?v=${activeSong.videoId}`}
@@ -125,15 +127,17 @@ const MusicPlayer = () => {
         onProgress={handleProgress}
         onDuration={handleDuration}
         onEnded={handleNext}
-        width={isFullScreen && !isMobile ? '100vw' : '0px'}
-        height={isFullScreen && !isMobile ? '77.5vh' : '0px'}
+        volume={volume}
+        muted={isMuted}
+        width={isMobile ? '0px' : isFullScreen ? '100vw' : '0px'}
+        height={isMobile ? '0px' : isFullScreen ? '80vh' : '0px'}
         style={{
-          opacity: isFullScreen && !isMobile ? 1 : 0,
-          pointerEvents: isFullScreen && !isMobile ? 'auto' : 'none',
+          opacity: isMobile ? 0 : isFullScreen ? 1 : 0,
+          pointerEvents: isMobile ? 'none' : isFullScreen ? 'auto' : 'none',
           position: 'fixed',
-          top: '49.5%',
+          top: '12%',
           left: '50%',
-          transform: isFullScreen && !isMobile ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(0.8)',
+          transform: 'translate(-50%, 0)',
           transition: 'all 0.5s ease-in-out',
           zIndex: 100,
         }}
@@ -146,108 +150,165 @@ const MusicPlayer = () => {
               fs: 0,
               rel: 0,
               iv_load_policy: 3,
-              showinfo: 0
+              showinfo: 0,
             },
           },
         }}
       />
 
-      {/* Left Section (Thumbnail and Song Info) */}
-      <div className="flex items-center w-full md:w-1/3 gap-3">
+      {/* Left Section - Thumbnail and Song Info */}
+      <div className="flex items-center gap-3 w-full md:w-1/3 relative">
         <img
           src={activeSong.thumbnail}
           alt="Song Thumbnail"
-          className="w-16 h-16 rounded-lg"
+          className="w-14 h-14 rounded-md"
         />
-        <div className="flex flex-col justify-center text-white truncate">
-          <span className="font-semibold text-sm md:text-md">
-            {activeSong.title}
-          </span>
-        </div>
-        <button onClick={handleLikeClick} className="ml-3 focus:outline-none">
-          {isLiked ? (
-            <FaHeart className="text-red-700 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0 text-2xl transition-colors duration-200" />
-          ) : (
-            <FaRegHeart className="text-gray-300 absolute sm:relative top-24 right-4 sm:top-0 sm:right-0 text-2xl hover:text-[#1ed760] transition-colors duration-200" />
-          )}
-        </button>
-
-        {/* Toggle Button */}
-        <button
-          className="ml-auto text-white focus:outline-none md:hidden"
-          onClick={toggleOpen}
-        >
-          {isOpen ? (
-            <FaChevronDown className="h-6 w-6" />
-          ) : (
-            <FaChevronUp className="h-6 w-6" />
-          )}
-        </button>
-      </div>
-
-      {/* Center Section (Controls) */}
-      {isOpen && (
-        <div className="flex justify-center items-center gap-4 w-full md:w-1/3 mt-4 md:mt-0">
-          <button
-            className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-            onClick={skipPrevious}
-          >
-            <FaStepBackward style={{ fontSize: '30px' }} />
-          </button>
-          <button
-            className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-            onClick={togglePlayPause}
-          >
-            {isPlaying ? (
-              <FaPause className="text-orange-400" style={{ fontSize: '40px' }} />
-            ) : (
-              <FaPlay className="text-orange-400" style={{ fontSize: '40px' }} />
-            )}
-          </button>
-          <button
-            className="text-white hover:text-[#1ed760] transition-colors duration-200 focus:outline-none"
-            onClick={handleNext}
-          >
-            <FaStepForward style={{ fontSize: '30px' }} />
-          </button>
-        </div>
-      )}
-
-      {/* Right Section (Seek Bar) */}
-      {isOpen && (
-        <div className="flex flex-col w-full md:w-1/3 items-center mt-4 md:mt-0">
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step="any"
-            value={played}
-            onChange={(e) => {
-              handleSeekChange(e);
-              playerRef.current.seekTo(parseFloat(e.target.value));
-            }}
-            className={`w-full h-1 rounded-lg appearance-none cursor-pointer focus:outline-none ${
-              isPlaying ? 'bg-[#1DB954]' : 'bg-gray-600'
-            } transition-colors duration-200`}
-          />
-          <div className="time text-white text-xs mt-1 flex justify-between w-full px-2">
-            <span>{formatTime(played * duration)}</span>
-            <span>{formatTime(duration)}</span>
+        <div className="flex flex-col text-white truncate">
+          <div className="flex flex-col text-white w-full">
+            <span className="font-semibold text-md md:text-lg whitespace-normal">
+              {activeSong?.title
+                ? activeSong.title.split(/[\|,()]/)[0].trim()
+                : ''}
+            </span>
+            <span className="text-sm md:text-md text-gray-400 whitespace-normal">
+              {activeSong?.title
+                ? activeSong.title
+                    .split(/[\|,()]/)
+                    .slice(1)
+                    .join(',')
+                    .trim()
+                : ''}
+            </span>
           </div>
         </div>
-      )}
-
-      {/* Full Screen Toggle */}
-      <button
-        className="absolute hidden md:block -top-0 right-2 text-white focus:outline-none"
-        onClick={toggleFullScreen}
-      >
-        {isFullScreen ? (
-          <FaChevronDown className="h-6 w-12" />
-        ) : (
-          <FaChevronUp className="h-6 w-12" />
+        {(!isMobile || !isShrunk) && (
+          <button onClick={handleLikeClick} className="ml-3 focus:outline-none">
+            {isLiked ? (
+              <FaHeart className="text-[#1DB954] text-xl transition-colors duration-200" />
+            ) : (
+              <FaRegHeart className="text-gray-300 text-xl hover:text-[#1DB954] transition-colors duration-200" />
+            )}
+          </button>
         )}
-      </button>
+        {/* Chevron Button for Mobile Shrink/Expand */}
+        {isMobile && (
+          <button
+            className="text-white focus:outline-none absolute right-0 top-0 mt-1 mr-1"
+            onClick={toggleShrink}
+          >
+            {isShrunk ? (
+              <FaChevronUp className="text-lg" />
+            ) : (
+              <FaChevronDown className="text-lg" />
+            )}
+          </button>
+        )}
+      </div>
+
+      {/* Conditionally render Center and Right Sections */}
+      {(!isMobile || !isShrunk) && (
+        <>
+          {/* Center Section - Playback Controls */}
+          <div className="flex items-center justify-center w-full md:w-1/3 gap-6 mt-2 md:mt-0">
+            <button
+              className="text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none"
+              onClick={() => console.log('Shuffle')}
+            >
+              <FaRandom />
+            </button>
+            <button
+              className="text-white hover:text-[#1DB954] transition-colors duration-200 focus:outline-none"
+              onClick={skipPrevious}
+            >
+              <FaStepBackward className="text-2xl" />
+            </button>
+            <button
+              className="bg-white text-black rounded-full p-3 focus:outline-none"
+              onClick={togglePlayPause}
+            >
+              {isPlaying ? (
+                <FaPause className="text-black" />
+              ) : (
+                <FaPlay className="text-black" />
+              )}
+            </button>
+            <button
+              className="text-white hover:text-[#1DB954] transition-colors duration-200 focus:outline-none"
+              onClick={handleNext}
+            >
+              <FaStepForward className="text-2xl" />
+            </button>
+            <button
+              className="text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none"
+              onClick={() => console.log('Queue')}
+            >
+              <MdQueueMusic />
+            </button>
+          </div>
+
+          {/* Right Section - Seek Bar, Volume, and Fullscreen Toggle */}
+          <div className="flex items-center gap-4 w-full md:w-1/3 justify-end mt-2 md:mt-0">
+            <div className="flex flex-col items-center w-full">
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step="any"
+                value={played}
+                onChange={(e) => {
+                  handleSeekChange(e);
+                  playerRef.current.seekTo(parseFloat(e.target.value));
+                }}
+                className="w-full h-1 rounded-lg appearance-none cursor-pointer focus:outline-none bg-gray-600 transition-colors duration-200"
+              />
+              <div className="time text-white text-xs mt-1 flex justify-between w-full">
+                <span>{formatTime(played * duration)}</span>
+                <span>{formatTime(duration)}</span>
+              </div>
+            </div>
+            {/* Hide Volume Controls on Mobile */}
+            {!isMobile && (
+              <>
+                <button
+                  className="text-white focus:outline-none"
+                  onClick={handleMuteToggle}
+                >
+                  {isMuted ? (
+                    <FaVolumeMute className="text-lg" />
+                  ) : (
+                    <FaVolumeUp className="text-lg" />
+                  )}
+                </button>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={volume}
+                  onChange={(e) => {
+                    setVolume(parseFloat(e.target.value));
+                    playerRef.current.volume = parseFloat(e.target.value);
+                  }}
+                  className="w-24 h-1 rounded-lg appearance-none cursor-pointer focus:outline-none bg-gray-400  duration-200"
+                />
+              </>
+            )}
+            {/* Chevron Button for Fullscreen Toggle on Desktop */}
+            {!isMobile && (
+              <button
+                className="text-white focus:outline-none"
+                onClick={toggleFullScreen}
+              >
+                {isFullScreen ? (
+                  <FaChevronDown className="text-lg" />
+                ) : (
+                  <FaChevronUp className="text-lg" />
+                )}
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

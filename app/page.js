@@ -79,9 +79,9 @@ const HomePage = () => {
   };
 
   return (
-    <div className="relative w-full overflow-y-auto mt-14 mb-28 bg-transparent p-6">
+    <div className="relative w-full overflow-y-auto mt-3 mb-28 bg-transparent p-6">
       <h2 className="text-3xl font-bold text-[#1db954] mb-4">Most Viewed Songs</h2>
-      <div className="grid grid-cols-1 m-2 px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto h-[28rem] py-4 hidden-scrollbar">
+      <div className="grid grid-cols-1 m-2 px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto h-[30rem] 2xl:h-[38rem] py-4 hidden-scrollbar">
         {randomHits.map((song, index) => (
           <div
             key={index}

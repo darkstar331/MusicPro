@@ -1,11 +1,13 @@
 'use client';
 import Image from 'next/image';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import ReactLoading from 'react-loading';
 import axios from 'axios';
 import { FaGithub, FaUserCircle } from 'react-icons/fa';
+import LoginIcon from '@mui/icons-material/Login';
 
 const Header = () => {
     const { data: session, status } = useSession();
@@ -87,8 +89,8 @@ const Header = () => {
     return (
         <nav className='flex justify-between items-center p-5 bg-[#121212] text-white border-b-4 border-[#000000] shadow-md'>
             <div className="flex items-center space-x-3 font-extrabold md:text-2xl text-xl">
-                <img className="md:w-11 w-7 rounded-full" src="/favicon.ico" alt="Logo" />
-                <span className="tracking-wide">MusicLite</span>
+                <LibraryMusicIcon/>
+                <span className="tracking-wide font-thin text-lg">MusicLite</span>
             </div>
 
             <div>
@@ -152,7 +154,7 @@ const Header = () => {
                         onClick={() => signIn('github')}
                         className="flex items-center justify-center"
                     >
-                        <FaGithub className="w-10 h-10 mr-2" />
+                    <LoginIcon />
                     </button>
                 )}
             </div>
