@@ -70,7 +70,7 @@ const SearchBar = () => {
             {!showSearchBar && (
                 <button 
                     onClick={() => setShowSearchBar(true)}
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] transition-colors duration-300 focus:outline-none absolute right-[15rem]"
+                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] transition-colors duration-300 focus:outline-none absolute -right-[20rem]"
                 >
                     <FaSearch className="text-white w-6 h-6" />
                 </button>

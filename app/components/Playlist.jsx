@@ -1,71 +1,102 @@
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
-import { FaTrash, FaPlay } from 'react-icons/fa';
-import styles from './Playlist.module.css'; // Import the CSS module
+import { FaTrash, FaPlay, FaSearch } from 'react-icons/fa';
+import styles from './Playlist.module.css';
 
 const Playlist = () => {
   const { playlist, setCurrent, handleRemove } = useMusicPlayer();
   const { data: session } = useSession();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleSongClick = (song) => {
-    setCurrent(song); // Set the clicked song as the current song
+    setCurrent(song);
   };
 
+  // Filter songs based on search term
+  const filteredPlaylist = playlist.filter((song) =>
+    `${song.title} ${song.artist}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="mt-9 p-4 md:p-10 text-white h-[57vh] overflow-y-auto hidden-scrollbar">
-      {playlist.length === 0 ? (
-        <p className="text-gray-400 text-center text-lg py-20">
-          No liked songs yet. Start adding some!
-        </p>
-      ) : (
-        <div className="grid grid-cols-1  overflow-y-auto sm:grid-cols-2 p-2 mx-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-4 overflow-auto">
-          {playlist.map((song, index) => (
-            <div
-              key={song.videoId}
-              className={`group cursor-pointer user-select-none w-full max-w-[300px] mx-auto border border-[#ffffff22] bg-[#282c34] bg-gradient-to-b from-[#282c34] to-[rgba(17,0,32,0.5)] shadow-lg rounded-lg backdrop-blur-md overflow-hidden p-4 ${styles.shinyCard}`}
-              onClick={() => handleSongClick(song)}
-            >
-              <div className="flex flex-col">
-                <img
-                  className="rounded-md w-full h-[250px] object-cover mb-4"
-                  src="https://i.imgur.com/aZ9HulS.png"
-                  alt="Song Cover"
-                />
-                <h2 className="text-lg font-bold text-white truncate group-hover:text-[#1db954] transition-colors mb-2">
-                  {song.title}
-                </h2>
-                <p className="text-gray-400 truncate mb-4">{song.artist}</p>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
+    <>
+      <div className=" mt-8 p-5 relative">
+        <input
+          type="text"
+          placeholder="Search Your Playlist"
+          className="w-full p-3 pl-10 rounded-md bg-transparent border border-orange-300 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <FaSearch className="absolute left-8 top-9 text-gray-400" />
+      </div>
+      <div className="p-4 md:p-10 h-[60vh] xl:h-[67vh] overflow-y-auto hidden-scrollbar text-white">
+
+        {playlist.length === 0 ? (
+          <p className="text-gray-400 text-center text-lg py-20">
+            No liked songs yet. Start adding some!
+          </p>
+        ) : filteredPlaylist.length === 0 ? (
+          <p className="text-gray-400 text-center text-lg py-20">
+            No songs match your search.
+          </p>
+        ) : (
+          <div
+            className="h-[calc(100vh-300px)] overflow-y-auto pr-2"
+          // Adjust the height as needed to fit your layout
+          >
+            <ul className="space-y-2">
+              {filteredPlaylist.map((song) => (
+                <li
+                  key={song.videoId}
+                  className="flex items-center justify-between bg-[#282c34] bg-gradient-to-r from-[#282c34] to-[rgba(17,0,32,0.5)] p-3 rounded-lg hover:bg-[#333842] transition-colors cursor-pointer group"
+                  onClick={() => handleSongClick(song)}
+                >
+                  <div className="flex items-center space-x-4">
+                    <img
+                      className="w-12 h-12 rounded-md object-cover"
+                      src={song.thumbnail || 'https://i.imgur.com/aZ9HulS.png'}
+                      alt="Song Cover"
+                    />
+                    <div>
+                      <h2 className="text-sm font-bold text-white group-hover:text-green-500 transition-colors">
+                        {song.title}
+                      </h2>
+                      <p className="text-xs text-gray-400">{song.artist}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
                     <button
-                      className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full shadow-lg hover:from-green-500 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1"
+                      className="w-8 h-8 flex items-center justify-center bg-green-500 text-white rounded-full hover:bg-green-600 active:scale-95 transition-all duration-200"
                       onClick={(e) => {
-                        e.stopPropagation(); // Prevent the click from setting the current song
+                        e.stopPropagation();
                         handleSongClick(song);
                       }}
                     >
-                      <FaPlay className="w-5 h-5" />
+                      <FaPlay className="w-4 h-4" />
                     </button>
-                    <span className="ml-2 text-white font-medium">Play</span>
+                    <button
+                      className="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600 active:scale-95 transition-all duration-200"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemove(song.videoId);
+                      }}
+                    >
+                      <FaTrash className="w-4 h-4" />
+                    </button>
                   </div>
-                  <button
-                    className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-red-400 to-red-600 text-white rounded-full shadow-lg hover:from-red-500 hover:to-red-700 transition-all duration-300 transform hover:-translate-y-1"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click from setting the current song
-                      handleRemove(song.videoId); // Remove the song from the playlist
-                    }}
-                  >
-                    <FaTrash className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      </>
+      );
+   
 };
 
 export default Playlist;
+
