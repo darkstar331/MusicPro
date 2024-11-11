@@ -22,16 +22,6 @@ const Playlist = () => {
 
   return (
     <>
-      <div className=" mt-8 p-5 relative">
-        <input
-          type="text"
-          placeholder="Search Your Playlist"
-          className="w-full p-3 pl-10 rounded-md bg-transparent border border-orange-300 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <FaSearch className="absolute left-8 top-9 text-gray-400" />
-      </div>
       <div className="p-4 md:p-10 h-[60vh] xl:h-[67vh] overflow-y-auto hidden-scrollbar text-white">
 
         {playlist.length === 0 ? (

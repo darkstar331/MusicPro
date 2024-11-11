@@ -1,5 +1,7 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+// app/components/MusicPlayer.jsx
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import ReactPlayer from 'react-player/youtube';
 import {
@@ -99,7 +101,6 @@ const MusicPlayer = () => {
 
   const handleMuteToggle = () => {
     setIsMuted((prev) => !prev);
-    playerRef.current.muted = !isMuted;
   };
 
   const toggleFullScreen = () => {
@@ -112,12 +113,12 @@ const MusicPlayer = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 bg-[#181818] text-white border-t border-gray-800 px-4 z-50 ${
+      className={`bg-[#181818] fixed bottom-0 left-0 right-0 text-white border-t border-gray-800 px-4 z-50 ${
         isMobile
           ? 'flex flex-col items-start overflow-hidden transition-all duration-500 ease-in-out'
           : 'flex items-center'
       }`}
-      style={{ maxHeight: isMobile ? (isShrunk ? '80px' : '200px') : 'auto' }}
+      style={{ height: isMobile ? (isShrunk ? '80px' : '200px') : '100px' }}
     >
       {/* ReactPlayer (hidden visually, used for playback) */}
       <ReactPlayer
@@ -130,7 +131,7 @@ const MusicPlayer = () => {
         volume={volume}
         muted={isMuted}
         width={isMobile ? '0px' : isFullScreen ? '100vw' : '0px'}
-        height={isMobile ? '0px' : isFullScreen ? '80vh' : '0px'}
+        height={isMobile ? '0px' : isFullScreen ? '78vh' : '0px'}
         style={{
           opacity: isMobile ? 0 : isFullScreen ? 1 : 0,
           pointerEvents: isMobile ? 'none' : isFullScreen ? 'auto' : 'none',
@@ -161,25 +162,15 @@ const MusicPlayer = () => {
         <img
           src={activeSong.thumbnail}
           alt="Song Thumbnail"
-          className="w-14 h-14 rounded-md"
+          className="w-14 h-14 rounded-md flex-shrink-0"
         />
-        <div className="flex flex-col text-white truncate">
-          <div className="flex flex-col text-white w-full">
-            <span className="font-semibold text-md md:text-lg whitespace-normal">
-              {activeSong?.title
-                ? activeSong.title.split(/[\|,()]/)[0].trim()
-                : ''}
-            </span>
-            <span className="text-sm md:text-md text-gray-400 whitespace-normal">
-              {activeSong?.title
-                ? activeSong.title
-                    .split(/[\|,()]/)
-                    .slice(1)
-                    .join(',')
-                    .trim()
-                : ''}
-            </span>
-          </div>
+        <div className="flex flex-col text-white truncate max-w-xs">
+          <span className="font-semibold text-md md:text-lg whitespace-nowrap overflow-hidden text-ellipsis">
+            {activeSong?.title || ''}
+          </span>
+          <span className="text-sm md:text-md text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">
+            {activeSong?.artist || ''}
+          </span>
         </div>
         {(!isMobile || !isShrunk) && (
           <button onClick={handleLikeClick} className="ml-3 focus:outline-none">
@@ -197,9 +188,9 @@ const MusicPlayer = () => {
             onClick={toggleShrink}
           >
             {isShrunk ? (
-              <FaChevronUp className="text-lg" />
+              <FaChevronUp className="text-lg " />
             ) : (
-              <FaChevronDown className="text-lg" />
+              <FaChevronDown className="text-lg " />
             )}
           </button>
         )}
@@ -287,9 +278,9 @@ const MusicPlayer = () => {
                   value={volume}
                   onChange={(e) => {
                     setVolume(parseFloat(e.target.value));
-                    playerRef.current.volume = parseFloat(e.target.value);
+                    playerRef.current.setVolume(parseFloat(e.target.value));
                   }}
-                  className="w-24 h-1 rounded-lg appearance-none cursor-pointer focus:outline-none bg-gray-400  duration-200"
+                  className="w-24 h-1 rounded-lg appearance-none cursor-pointer focus:outline-none bg-gray-400 duration-200"
                 />
               </>
             )}
@@ -314,3 +305,4 @@ const MusicPlayer = () => {
 };
 
 export default MusicPlayer;
+
