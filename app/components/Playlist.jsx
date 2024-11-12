@@ -22,7 +22,7 @@ const Playlist = () => {
 
   return (
     <>
-      <div className="p-4 md:p-10 h-[60vh] xl:h-[67vh] overflow-y-auto hidden-scrollbar text-white">
+      <div className="p-4 md:p-0 h-[60vh] xl:h-[67vh] overflow-y-auto hidden-scrollbar text-white">
 
         {playlist.length === 0 ? (
           <p className="text-gray-400 text-center text-lg py-20">
@@ -41,7 +41,7 @@ const Playlist = () => {
               {filteredPlaylist.map((song) => (
                 <li
                   key={song.videoId}
-                  className="flex items-center justify-between bg-[#282c34] bg-gradient-to-r from-[#282c34] to-[rgba(17,0,32,0.5)] p-3 rounded-lg hover:bg-[#333842] transition-colors cursor-pointer group"
+                  className="flex items-center justify-between  p-3 rounded-lg hover:bg-[#333842] bg-teal-900 transition-colors cursor-pointer group hidden-scrollbar"
                   onClick={() => handleSongClick(song)}
                 >
                   <div className="flex items-center space-x-4">
@@ -59,7 +59,7 @@ const Playlist = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <button
-                      className="w-8 h-8 flex items-center justify-center bg-green-500 text-white rounded-full hover:bg-green-600 active:scale-95 transition-all duration-200"
+                      className="w-8 h-8 flex items-center justify-center bg-white text-black rounded-full hover:bg-green-600 active:scale-95 transition-all duration-200"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleSongClick(song);
@@ -68,13 +68,13 @@ const Playlist = () => {
                       <FaPlay className="w-4 h-4" />
                     </button>
                     <button
-                      className="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full hover:bg-red-600 active:scale-95 transition-all duration-200"
+                      className="w-8 h-8 flex items-center justify-center bg-white text-black rounded-full hover:bg-red-600 active:scale-95 transition-all duration-200"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleRemove(song.videoId);
                       }}
                     >
-                      <FaTrash className="w-4 h-4" />
+                      <FaTrash className="w-4 h-4 " />
                     </button>
                   </div>
                 </li>

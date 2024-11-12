@@ -84,7 +84,7 @@ const SearchBar = () => {
         <div className="w-full max-w-lg mx-auto mt-6 px-4" ref={containerRef}>
             {/* Search Input */}
             <div
-                className="flex items-center bg-[#121212] text-white pl-4 pr-2 py-2 rounded-full shadow-lg transition-all duration-300"
+                className="flex items-center bg-[#3e4040] text-white pl-4 pr-2 py-2 rounded-full shadow-lg transition-all duration-300"
             >
                 <FaSearch className="text-gray-400 w-5 h-5 mr-2 flex-shrink-0" />
                 <input
