@@ -41,7 +41,7 @@ const Playlist = () => {
               {filteredPlaylist.map((song) => (
                 <li
                   key={song.videoId}
-                  className="flex items-center justify-between  p-3 rounded-lg hover:bg-[#333842] bg-teal-900 transition-colors cursor-pointer group hidden-scrollbar"
+                  className="flex items-center justify-between  p-3 rounded-lg hover:bg-[#333842] bg-teal-900  cursor-pointer  hidden-scrollbar"
                   onClick={() => handleSongClick(song)}
                 >
                   <div className="flex items-center space-x-4">
