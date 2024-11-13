@@ -2,11 +2,9 @@ import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import { FaTrash, FaPlay, FaSearch } from 'react-icons/fa';
-import styles from './Playlist.module.css';
 
 const Playlist = () => {
   const { playlist, setCurrent, handleRemove } = useMusicPlayer();
-  const { data: session } = useSession();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSongClick = (song) => {
