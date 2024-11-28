@@ -20,7 +20,7 @@ const Playlist = () => {
   )
 
   return (
-    <div className="flex mb-4 bg-[#080907] max-h-[7150px] flex-col h-screen text-white">
+    <div className="flex mb-4 bg-[#080907] max-h-[710px] flex-col h-screen text-white">
       {/* Header */}
       <div className="flex -mt-4 items-center space-x-4 bg-[#080907]">
         <div className="w-12 h-12 flex items-center text-green-900 justify-center shadow-xl">
