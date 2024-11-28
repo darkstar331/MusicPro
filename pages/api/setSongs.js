@@ -1,5 +1,6 @@
-import dbConnect from '@/lib/mongodb';
-import User from '@/models/user';
+import dbConnect from '../../lib/mongodb';
+import User from '../../models/user';
+
 
 export default async function handler(req, res) {
     await dbConnect();
@@ -52,4 +53,3 @@ export default async function handler(req, res) {
         res.status(405).json({ message: 'Method not allowed' });
     }
 }
-

@@ -17,9 +17,18 @@ const nextConfig = {
         hostname: 'avatars.githubusercontent.com',
         pathname: '/**', // This allows all paths from avatars.githubusercontent.com
       },
+      {
+        protocol: 'https',
+        hostname: 'misc.scdn.co',
+        pathname: '/**', // This allows all paths from misc.scdn.co
+      },
+      {
+        protocol: 'https',
+        hostname: 'wrapped-images.spotifycdn.com',
+        pathname: '/**', // This allows all paths from misc.scdn.co
+      },
     ],
   },
 };
 
 export default nextConfig;
-

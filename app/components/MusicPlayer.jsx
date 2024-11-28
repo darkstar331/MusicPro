@@ -1,23 +1,23 @@
-// app/components/MusicPlayer.jsx
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import ReactPlayer from 'react-player/youtube';
 import {
-  FaHeart,
-  FaRegHeart,
-  FaStepBackward,
-  FaStepForward,
-  FaPlay,
-  FaPause,
-  FaRandom,
-  FaVolumeUp,
-  FaVolumeMute,
-  FaChevronUp,
-  FaChevronDown,
-} from 'react-icons/fa';
-import { MdQueueMusic } from 'react-icons/md';
+  Heart,
+  SkipBack,
+  SkipForward,
+  Play,
+  Pause,
+  Shuffle,
+  Repeat,
+  Volume2,
+  VolumeX,
+  Mic2,
+  ListMusic,
+  Maximize2,
+  ChevronDown,
+} from 'lucide-react';
 
 const MusicPlayer = () => {
   const {
@@ -43,21 +43,8 @@ const MusicPlayer = () => {
 
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.8);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isShrunk, setIsShrunk] = useState(false);
-
-  // Set initial device settings
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize(); // Initialize on mount
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     if (current) {
@@ -66,7 +53,7 @@ const MusicPlayer = () => {
       );
       setIsLiked(isAlreadyLiked);
     }
-  }, [current, playlist]);
+  }, [current, playlist, setIsLiked]);
 
   const handleLikeClick = () => {
     if (isLiked) return;
@@ -103,143 +90,77 @@ const MusicPlayer = () => {
     setIsMuted((prev) => !prev);
   };
 
-  const toggleFullScreen = () => {
-    setIsFullScreen((prev) => !prev);
-  };
-
-  const toggleShrink = () => {
-    setIsShrunk((prev) => !prev);
-  };
-
   return (
-    <div
-      className={`bg-[#181818] fixed bottom-0 left-0 right-0 text-white border-t border-gray-800 px-4 z-50 ${
-        isMobile
-          ? 'flex flex-col items-start overflow-hidden transition-all duration-500 ease-in-out'
-          : 'flex items-center'
-      }`}
-      style={{ height: isMobile ? (isShrunk ? '80px' : '200px') : '100px' }}
-    >
-      {/* ReactPlayer (hidden visually, used for playback) */}
-      <ReactPlayer
-        ref={playerRef}
-        url={`https://www.youtube.com/watch?v=${activeSong.videoId}`}
-        playing={isPlaying}
-        onProgress={handleProgress}
-        onDuration={handleDuration}
-        onEnded={handleNext}
-        volume={volume}
-        muted={isMuted}
-        width={isMobile ? '0px' : isFullScreen ? '100vw' : '0px'}
-        height={isMobile ? '0px' : isFullScreen ? '78vh' : '0px'}
-        style={{
-          opacity: isMobile ? 0 : isFullScreen ? 1 : 0,
-          pointerEvents: isMobile ? 'none' : isFullScreen ? 'auto' : 'none',
-          position: 'fixed',
-          top: '12%',
-          left: '50%',
-          transform: 'translate(-50%, 0)',
-          transition: 'all 0.5s ease-in-out',
-          zIndex: 100,
-        }}
-        config={{
-          youtube: {
-            playerVars: {
-              controls: 0,
-              modestbranding: 1,
-              playsinline: 1,
-              fs: 0,
-              rel: 0,
-              iv_load_policy: 3,
-              showinfo: 0,
-            },
-          },
-        }}
-      />
-
-      {/* Left Section - Thumbnail and Song Info */}
-      <div className="flex items-center gap-3 w-full md:w-1/3 relative">
-        <img
-          src={activeSong.thumbnail}
-          alt="Song Thumbnail"
-          className="w-14 h-14 rounded-md flex-shrink-0"
-        />
-        <div className="flex flex-col text-white truncate max-w-xs">
-          <span className="font-semibold text-md md:text-lg whitespace-nowrap overflow-hidden text-ellipsis">
-            {activeSong?.title || ''}
-          </span>
-          <span className="text-sm md:text-md text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">
-            {activeSong?.artist || ''}
-          </span>
-        </div>
-        {(!isMobile || !isShrunk) && (
-          <button onClick={handleLikeClick} className="ml-3 focus:outline-none">
-            {isLiked ? (
-              <FaHeart className="text-[#1DB954] text-xl transition-colors duration-200" />
-            ) : (
-              <FaRegHeart className="text-gray-300 text-xl hover:text-[#1DB954] transition-colors duration-200" />
-            )}
-          </button>
-        )}
-        {/* Chevron Button for Mobile Shrink/Expand */}
-        {isMobile && (
+    <div className="fixed bottom-0 left-0 right-0 bg-[#181818]  px-4 py-2">
+      <div className="flex items-center justify-between">
+        {/* Left: Now Playing */}
+        <div className="flex items-center w-[30%] overflow-hidden">
+          <div className="flex-shrink-0 w-14 h-14 mr-3">
+            <img
+              src={activeSong.thumbnail}
+              alt={activeSong.title}
+              width={56}
+              height={56}
+              className="rounded"
+            />
+          </div>
+          <div className="mr-4 overflow-hidden">
+            <h3 className="text-sm font-semibold text-white truncate max-w-[200px]">
+              {activeSong.title}
+            </h3>
+            <p className="text-xs text-gray-400 truncate max-w-[200px]">
+              {activeSong.artist}
+            </p>
+          </div>
           <button
-            className="text-white focus:outline-none absolute right-0 top-0 mt-1 mr-1"
-            onClick={toggleShrink}
+            onClick={handleLikeClick}
+            className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200 flex-shrink-0"
           >
-            {isShrunk ? (
-              <FaChevronUp className="text-lg " />
-            ) : (
-              <FaChevronDown className="text-lg " />
-            )}
+            <Heart
+              className={`w-5 h-5 ${
+                isLiked ? 'fill-[#1DB954] text-[#1DB954]' : ''
+              }`}
+            />
           </button>
-        )}
-      </div>
+        </div>
 
-      {/* Conditionally render Center and Right Sections */}
-      {(!isMobile || !isShrunk) && (
-        <>
-          {/* Center Section - Playback Controls */}
-          <div className="flex items-center justify-center w-full md:w-1/3 gap-6 mt-2 md:mt-0">
-            <button
-              className="text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none"
-              onClick={() => console.log('Shuffle')}
-            >
-              <FaRandom />
+        {/* Center: Player Controls */}
+        <div className="flex flex-col items-center w-[40%]">
+          <div className="flex items-center mb-1 gap-4">
+            <button className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200">
+              <Shuffle className="w-4 h-4" />
             </button>
             <button
-              className="text-white hover:text-[#1DB954] transition-colors duration-200 focus:outline-none"
               onClick={skipPrevious}
+              className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200"
             >
-              <FaStepBackward className="text-2xl" />
+              <SkipBack className="w-5 h-5" />
             </button>
             <button
-              className="bg-white text-black rounded-full p-3 focus:outline-none"
               onClick={togglePlayPause}
+              className="bg-white rounded-full p-2 hover:scale-105 focus:outline-none transition-transform duration-200"
             >
               {isPlaying ? (
-                <FaPause className="text-black" />
+                <Pause className="w-5 h-5 text-black" />
               ) : (
-                <FaPlay className="text-black" />
+                <Play className="w-5 h-5 text-black" />
               )}
             </button>
             <button
-              className="text-white hover:text-[#1DB954] transition-colors duration-200 focus:outline-none"
               onClick={handleNext}
+              className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200"
             >
-              <FaStepForward className="text-2xl" />
+              <SkipForward className="w-5 h-5" />
             </button>
-            <button
-              className="text-gray-400 hover:text-white transition-colors duration-200 focus:outline-none"
-              onClick={() => console.log('Queue')}
-            >
-              <MdQueueMusic />
+            <button className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200">
+              <Repeat className="w-4 h-4" />
             </button>
           </div>
-
-          {/* Right Section - Seek Bar, Volume, and Fullscreen Toggle */}
-          <div className="flex items-center gap-4 w-full md:w-1/3 justify-end mt-2 md:mt-0">
-            <div className="flex flex-col items-center w-full">
+          <div className="flex items-center w-full gap-2 group">
+            <span className="text-xs text-gray-400 w-10 text-right">
+              {formatTime(played * duration)}
+            </span>
+            <div className="relative flex-grow">
               <input
                 type="range"
                 min={0}
@@ -250,59 +171,120 @@ const MusicPlayer = () => {
                   handleSeekChange(e);
                   playerRef.current.seekTo(parseFloat(e.target.value));
                 }}
-                className="w-full h-1 rounded-lg appearance-none cursor-pointer focus:outline-none bg-gray-600 transition-colors duration-200"
+                className="w-full h-1 bg-gray-600 rounded-full appearance-none cursor-pointer"
               />
-              <div className="time text-white text-xs mt-1 flex justify-between w-full">
-                <span>{formatTime(played * duration)}</span>
-                <span>{formatTime(duration)}</span>
-              </div>
+              <div
+                className="absolute top-0 left-0 h-1 bg-white group-hover:bg-[#1DB954] rounded-full pointer-events-none transition-colors duration-200"
+                style={{ width: `${played * 100}%` }}
+              ></div>
             </div>
-            {/* Hide Volume Controls on Mobile */}
-            {!isMobile && (
-              <>
-                <button
-                  className="text-white focus:outline-none"
-                  onClick={handleMuteToggle}
-                >
-                  {isMuted ? (
-                    <FaVolumeMute className="text-lg" />
-                  ) : (
-                    <FaVolumeUp className="text-lg" />
-                  )}
-                </button>
+            <span className="text-xs text-gray-400 w-10">
+              {formatTime(duration)}
+            </span>
+          </div>
+        </div>
+
+        {/* Right: Extra Controls */}
+        <div className="flex items-center justify-end w-[30%] gap-4">
+          <button className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200">
+            <Mic2 className="w-5 h-5" />
+          </button>
+          <button className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200">
+            <ListMusic className="w-5 h-5" />
+          </button>
+          <div
+            className="relative"
+            onMouseEnter={() => setShowVolumeSlider(true)}
+            onMouseLeave={() => setShowVolumeSlider(false)}
+          >
+            <button
+              onClick={handleMuteToggle}
+              className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200"
+            >
+              {isMuted ? (
+                <VolumeX className="w-5 h-5" />
+              ) : (
+                <Volume2 className="w-5 h-5" />
+              )}
+            </button>
+            {showVolumeSlider && (
+              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gray-600 rounded-full">
                 <input
                   type="range"
                   min={0}
                   max={1}
-                  step={0.05}
-                  value={volume}
+                  step={0.01}
+                  value={isMuted ? 0 : volume}
                   onChange={(e) => {
-                    setVolume(parseFloat(e.target.value));
-                    playerRef.current.setVolume(parseFloat(e.target.value));
+                    const newVolume = parseFloat(e.target.value);
+                    setVolume(newVolume);
+                    playerRef.current.setVolume(newVolume);
                   }}
-                  className="w-24 h-1 rounded-lg appearance-none cursor-pointer focus:outline-none bg-gray-400 duration-200"
+                  className="absolute w-full h-full opacity-0 cursor-pointer"
                 />
-              </>
-            )}
-            {/* Chevron Button for Fullscreen Toggle on Desktop */}
-            {!isMobile && (
-              <button
-                className="text-white focus:outline-none"
-                onClick={toggleFullScreen}
-              >
-                {isFullScreen ? (
-                  <FaChevronDown className="text-lg" />
-                ) : (
-                  <FaChevronUp className="text-lg" />
-                )}
-              </button>
+                <div
+                  className="absolute top-0 left-0 h-full bg-white rounded-full pointer-events-none transition-all duration-200"
+                  style={{ width: `${(isMuted ? 0 : volume) * 100}%` }}
+                ></div>
+              </div>
             )}
           </div>
-        </>
-      )}
+          <button
+            onClick={() => setIsFullScreen((prev) => !prev)}
+            className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200"
+          >
+            {isFullScreen ? (
+              <ChevronDown className="w-5 h-5" />
+            ) : (
+              <Maximize2 className="w-5 h-5" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* YouTube Player with Smooth Transition */}
+      <div
+        className="video-wrapper"
+        style={{
+          position: 'fixed',
+          top: '9%',
+          left: '50%',
+          transform: 'translate(-50%, 0)',
+          zIndex: 100,
+          width: isFullScreen ? '100vw' : '0',
+          height: isFullScreen ? '81vh' : '0',
+          overflow: 'hidden',
+          transition: 'width 0s ease, height 0s ease',
+        }}
+      >
+        <ReactPlayer
+          ref={playerRef}
+          url={`https://www.youtube.com/watch?v=${activeSong.videoId}`}
+          playing={isPlaying}
+          onProgress={handleProgress}
+          onDuration={handleDuration}
+          onEnded={handleNext}
+          volume={volume}
+          muted={isMuted}
+          width="100%"
+          height="100%"
+          config={{
+            youtube: {
+              playerVars: {
+                controls: isFullScreen ? 1 : 0,
+                modestbranding: 1,
+                playsinline: 1,
+                fs: 1,
+                rel: 0,
+                iv_load_policy: 3,
+                showinfo: 0,
+              },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };
 
 export default MusicPlayer;
-

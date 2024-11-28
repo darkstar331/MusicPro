@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
-import { triggerUserCreation } from '@/lib/userCreation';
+import { triggerUserCreation } from '../../../../lib/userCreation';
+ // Relative path as a fallback
+
 
 const handler = NextAuth({
   providers: [

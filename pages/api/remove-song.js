@@ -1,6 +1,6 @@
 // pages/api/remove-song.js
-import dbConnect from '@/lib/mongodb';
-import User from '@/models/user';
+import dbConnect from '../../lib/mongodb';
+import User from '../../models/user';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
