@@ -20,9 +20,9 @@ const Playlist = () => {
   )
 
   return (
-    <div className="flex mb-4 bg-[#080907] max-h-[590px] flex-col h-screen text-white">
+    <div className="flex mb-4 bg-[#080907] max-h-[670px] flex-col h-screen text-white">
       {/* Header */}
-      <div className="flex items-center space-x-4 bg-[#080907]">
+      <div className="flex -mt-4 items-center space-x-4 bg-[#080907]">
         <div className="w-12 h-12 flex items-center text-green-900 justify-center shadow-xl">
           <Heart className="w-20 ml-4 h-20" />
         </div>
@@ -35,7 +35,7 @@ const Playlist = () => {
       </div>
 
       {/* Playlist */}
-      <div className="flex-grow bg-[#080907] mt-3 overflow-y-auto hidden-scrollbar px-6">
+      <div className="flex-grow bg-[#080907] mt-6 overflow-y-auto hidden-scrollbar px-6">
         {playlist.length === 0 ? (
           <p className="text-gray-400 text-center text-lg py-20">
             No liked songs yet. Start adding some!
