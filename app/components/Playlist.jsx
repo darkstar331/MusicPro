@@ -36,7 +36,7 @@ const Playlist = () => {
   };
 
   return (
-    <div className="flex bg-[#080907] max-h-[711px] 2xl:max-h-[885px] flex-col h-screen text-white">
+    <div className="flex bg-[#080907] max-h-[730px] 2xl:max-h-[885px] flex-col h-screen text-white">
       {/* Header */}
       <div className="flex flex-col  -mt-1 space-x-4 max-h-[590px] bg-[#080907]">
         {/* Chat Button */}
