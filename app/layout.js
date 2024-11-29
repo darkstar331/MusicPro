@@ -8,7 +8,7 @@ import SessionWrapper from "./components/SessionWrapper";
 const roboto = Roboto({ subsets: ["latin"], weight: ['400', '700'] });
 
 export const metadata = {
-  title: "Stream",
+  title: "Wave",
   description: "Listen to your favourite tracks",
 };
 
