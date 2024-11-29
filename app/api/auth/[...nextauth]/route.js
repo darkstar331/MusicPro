@@ -7,8 +7,8 @@ import { triggerUserCreation } from '../../../../lib/userCreation';
 const handler = NextAuth({
   providers: [
     GitHubProvider({
-      clientId: 'Ov23ligtKVIvrdKXifVM',
-      clientSecret: 'bc6cf6fa2bfc9cb768102b06703e634a60971bb6',
+      clientId: 'Ov23liex7gSdyzuUeDOZ',
+      clientSecret: '18f88c4ff617aa6e989275cf4bcae572f99522ae',
     }),
   ],
   callbacks: {
