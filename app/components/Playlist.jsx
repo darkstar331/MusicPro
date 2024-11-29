@@ -36,7 +36,7 @@ const Playlist = () => {
   };
 
   return (
-    <div className="flex bg-[#080907] max-h-[730px] 2xl:max-h-[885px] flex-col h-screen text-white">
+    <div className="flex bg-[#080907] max-h-[750px] 2xl:max-h-[885px] flex-col h-screen text-white">
       {/* Header */}
       <div className="flex flex-col  -mt-1 space-x-4 max-h-[590px] bg-[#080907]">
         {/* Chat Button */}
@@ -68,10 +68,10 @@ const Playlist = () => {
           ) : (
             <table className="w-full">
               <thead>
-                <tr className="text-gray-400 border-b border-white/10">
+                <tr className="text-gray-400 border-b  border-white/10">
                   <th className="font-normal text-left pb-2">#</th>
                   <th className="font-normal text-left pb-2">Title</th>
-                  <th className="font-normal text-left pb-2">Artist</th>
+                  <th className="font-normal text-left pb-2">#</th>
                   <th className="font-normal text-left pb-2">Actions</th>
                 </tr>
               </thead>
