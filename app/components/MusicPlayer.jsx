@@ -78,10 +78,10 @@ const MusicPlayer = () => {
   };
 
   const dummyCurrent = {
-    videoId: 'dQw4w9WgXcQ',
-    title: 'Never Gonna Give You Up',
-    artist: 'Rick Astley',
-    thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg',
+    videoId: 'fHI8X4OXluQ',
+    title: 'Blinding Lights',
+    artist: 'The Weeknd',
+    thumbnail: 'https://img.youtube.com/vi/fHI8X4OXluQ/0.jpg',
   };
 
   const activeSong = current || dummyCurrent;
@@ -173,10 +173,7 @@ const MusicPlayer = () => {
                 }}
                 className="w-full h-1 bg-gray-600 rounded-full appearance-none cursor-pointer"
               />
-              <div
-                className="absolute top-0 left-0 h-1 bg-white group-hover:bg-[#1DB954] rounded-full pointer-events-none transition-colors duration-200"
-                style={{ width: `${played * 100}%` }}
-              ></div>
+            
             </div>
             <span className="text-xs text-gray-400 w-10">
               {formatTime(duration)}
@@ -185,13 +182,8 @@ const MusicPlayer = () => {
         </div>
 
         {/* Right: Extra Controls */}
-        <div className="flex items-center justify-end w-[30%] gap-4">
-          <button className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200">
-            <Mic2 className="w-5 h-5" />
-          </button>
-          <button className="text-gray-400 hover:text-white focus:outline-none transition-colors duration-200">
-            <ListMusic className="w-5 h-5" />
-          </button>
+        <div className="flex items-center justify-end w-[30%] gap-7">
+        
           <div
             className="relative"
             onMouseEnter={() => setShowVolumeSlider(true)}
@@ -247,12 +239,12 @@ const MusicPlayer = () => {
         className="video-wrapper"
         style={{
           position: 'fixed',
-          top: '9%',
+          top: '7%',
           left: '50%',
           transform: 'translate(-50%, 0)',
           zIndex: 100,
           width: isFullScreen ? '100vw' : '0',
-          height: isFullScreen ? '81vh' : '0',
+          height: isFullScreen ? '84vh' : '0',
           overflow: 'hidden',
           transition: 'width 0s ease, height 0s ease',
         }}

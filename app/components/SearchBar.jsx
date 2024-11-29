@@ -77,7 +77,7 @@ const SearchBar = () => {
           ref={inputRef}
           type="text"
           placeholder="Search for songs or artists..."
-          className="w-full pl-12 pr-10 py-3 bg-[#121212] rounded-full border border-transparent text-white placeholder-gray-500 focus:ring-2 focus:ring-[#1DB954] focus:outline-none transition-all duration-300"
+          className="w-full pl-12 pr-10 py-2 bg-[#121212] rounded-full border border-transparent text-white placeholder-gray-500 focus:ring-2 focus:ring-[#1DB954] focus:outline-none transition-all duration-300"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setShowResult(true)}

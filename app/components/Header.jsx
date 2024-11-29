@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import ReactLoading from 'react-loading';
 import axios from 'axios';
-import { ChevronLeft, ChevronRight, Home, Search, Library, Bell, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight,AudioLines, User } from 'lucide-react';
 import SearchBar from './SearchBar';
 
 const Header = () => {
@@ -93,7 +93,7 @@ const Header = () => {
                     <button className="bg-black rounded-full p-1">
                         <ChevronLeft className="w-6 h-6 text-gray-400" />
                     </button>
-                    <p className='font-semibold text-2xl'>WAVE</p>
+                    <AudioLines className='h-10 w-10' />
                     <button className="bg-black rounded-full p-1">
                         <ChevronRight className="w-6 h-6 text-gray-400" />
                     </button>
@@ -117,8 +117,8 @@ const Header = () => {
                                                 className="rounded-full"
                                                 src={session.user.image}
                                                 alt="Profile"
-                                                width={28}
-                                                height={28}
+                                                width={38}
+                                                height={38}
                                             />
                                         ) : (
                                             <User className="w-7 h-7 text-gray-400" />
@@ -126,14 +126,14 @@ const Header = () => {
                                     </button>
 
                                     {dropdownVisible && (
-                                        <div className="absolute right-0 mt-2 w-48 bg-[#282828] text-white shadow-lg py-1 rounded-md z-10">
+                                        <div className="absolute right-0 mt-2 w-48 bg-[#282828] text-white shadow-lg  rounded-md z-10">
                                             <div className="px-4 py-3 text-sm border-b border-gray-700">
                                                 <p className="font-medium truncate">{session.user.name}</p>
                                                 <p className="text-gray-400 truncate">{session.user.email}</p>
                                             </div>
                                             <button
                                                 onClick={handleSignOut}
-                                                className="w-full text-left px-4 py-2 text-sm hover:bg-[#3E3E3E] transition duration-200"
+                                                className="w-full text-left px-4 py-2 text-sm hover:bg-red-700 transition duration-200"
                                             >
                                                 Log out
                                             </button>
@@ -145,19 +145,14 @@ const Header = () => {
                     ) : (
                         <button
                             onClick={() => signIn('github')}
-                            className="bg-white text-black font-bold py-2 px-4 rounded-full hover:scale-105 transition duration-200"
+                            className="bg-[#181818] text-white hover:text-black hover:bg-white font-bold py-2 px-4 rounded-full hover:scale-105 transition duration-200"
                         >
                             Log in
                         </button>
                     )}
                 </div>
             </div>
-            <nav className="flex justify-center space-x-4 py-2">
-                <a href="#" className="flex items-center space-x-2 hover:text-white transition duration-200">
-                    <Home className="w-6 h-6" />
-                    <span>Home</span>
-                </a>
-            </nav>
+        
         </div>
     );
 }
